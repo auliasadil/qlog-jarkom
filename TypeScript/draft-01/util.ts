@@ -60,10 +60,10 @@ export class QUtil {
         // if there is just one, we expect there to be a "group_id" in the common_fields
         // if there are more, we expect "group_id" in the event_fields
         // if there isn't a group_id anywhere, we currently also assume there is just 1 connection
-        if( trace.event_fields.indexOf("group_id") >= 0 ){
-            return false;
-        }
-        else
-            return true;
+        // if( trace.event_fields.indexOf("group_id") >= 0 ){
+        //     return false;
+        // }
+        // else
+        return true;
     }
 }
