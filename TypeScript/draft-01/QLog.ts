@@ -12,7 +12,7 @@ export interface IQLog {
 
 export interface ITraceError {
     error_description: string,
-    uri: string,
+    uri?: string,
 
     vantage_point?: IVantagePoint
 }
