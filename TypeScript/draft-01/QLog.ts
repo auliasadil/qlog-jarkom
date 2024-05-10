@@ -18,15 +18,10 @@ export interface ITraceError {
 }
 
 export interface ITrace {
-    vantage_point: IVantagePoint,
+    vantage_point?: IVantagePoint,
     title?:string,
     description?: string,
-
-    configuration?: IConfiguration,
-
     common_fields?: ICommonFields,
-    event_fields: string[],
-
     events: Array<Array<EventField>>
 }
 
