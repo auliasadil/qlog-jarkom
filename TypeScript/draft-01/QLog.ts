@@ -38,15 +38,6 @@ export enum VantagePointType {
     unknown = "unknown",
 }
 
-export interface IConfiguration{
-    time_units?:"ms"|"us",
-    time_offset?:string,
-
-    original_uris?: Array<string>,
-
-    // allow additional properties. This way, we can enforce proper types for the ones defined in the spec, see other properties
-    [additionalUserSpecifiedProperty: string]: any
-}
 
 export interface ICommonFields{
     group_id?: string | Array<any>,
