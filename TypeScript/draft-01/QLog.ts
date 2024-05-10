@@ -6,8 +6,6 @@ export interface IQLog {
     qlog_version: string,
     title?:string,
     description?: string,
-    summary?:any,
-
     traces: Array<ITrace | ITraceError>
 }
 
