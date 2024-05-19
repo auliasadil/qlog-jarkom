@@ -22,7 +22,7 @@ export interface ITrace {
     title?:string,
     description?: string,
     common_fields?: ICommonFields,
-    events: Array<Array<EventField>>
+    events: Array<IEvent>
 }
 
 export interface IVantagePoint{
@@ -37,7 +37,6 @@ export enum VantagePointType {
     network = "network",
     unknown = "unknown",
 }
-
 
 export interface ICommonFields{
     group_id?: string | Array<any>,
@@ -63,12 +62,20 @@ export enum IDefaultEventFieldNames {
 export type EventType = ConnectivityEventType | TransportEventType | SecurityEventType | RecoveryEventType | HTTP3EventType | QPACKEventType | GenericEventType;
 
 // FIXME: TODO: add something for the DATA definitions!
-export type EventField = EventCategory | EventType | EventData | number | string; // number = for the time values, string = for unknown, user-specified fields
+export interface IEvent {
+    time: number,
+    name: EventCategoryAndType,
+    data: EventData,
+    text?: string
+}
+// export type EventField = EventCategory | EventType | EventData | number | string; // number = for the time values, string = for unknown, user-specified fields
 
 
 // ================================================================== //
 // Based on QUIC draft 23
 // ================================================================== //
+
+export type EventCategoryAndType = string; // e.g., "connectivity:connection_started"
 
 export enum EventCategory {
     connectivity = "connectivity",
@@ -152,8 +159,8 @@ export type EventData = IEventServerListening | IEventConnectionStarted | IEvent
                         IEventKeyUpdated | IEventKeyRetired |
                         IEventTransportParametersSet | IEventDatagramsReceived | IEventDatagramsSent | IEventDatagramDropped | IEventPacketReceived | IEventPacketSent | IEventPacketDropped | IEventPacketBuffered | IEventStreamStateUpdated | IEventFramesProcessed |
                         IEventRecoveryParametersSet | IEventMetricsUpdated | IEventCongestionStateUpdated | IEventLossTimerSet | IEventLossTimerExpired | IEventPacketLost | IEventMarkedForRetransmit |
-                        HTTP3EventData | 
-                        QPACKEventData | 
+                        HTTP3EventData |
+                        QPACKEventData |
                         GenericEventData ;
 
 // ================================================================== //
@@ -471,7 +478,9 @@ export enum HTTP3EventType {
     stream_type_set = "stream_type_set",
     frame_created = "frame_created",
     frame_parsed = "frame_parsed",
-    data_moved = "data_moved"
+    data_moved = "data_moved",
+    datagram_received = "data_received",
+    dependency_update = "dependency_update"
 }
 
 export interface IEventH3ParametersSet {
@@ -873,7 +882,7 @@ export interface IConnectionCloseFrame{
     error_space:ErrorSpace;
     error_code:TransportError | ApplicationError | CryptoError | string | number;
     raw_error_code:number;
-    reason:string; // hex
+    reason:string;
 
     trigger_frame_type?:number; // TODO: should be more defined, but we don't have a FrameType enum atm...
 }
